@@ -21,6 +21,16 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    public function findByStatusAndRole(array $statuses): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.status IN (:statuses)')
+            ->setParameter('statuses', $statuses)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

@@ -9,13 +9,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderType extends AbstractType
+class Order1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('status')
             ->add('summary')
             ->add('description')
+            ->add('customer', EntityType::class, [
+                'class' => User::class,
+'choice_label' => 'id',
+            ])
         ;
     }
 

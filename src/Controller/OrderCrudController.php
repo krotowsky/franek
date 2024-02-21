@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/customer/order')]
+#[Route('/panel/order')]
 class OrderCrudController extends AbstractController
 {
-    #[Route('/', name: 'app_order_crud_index', methods: ['GET'])]
+    #[Route('/list', name: 'app_order_crud_index', methods: ['GET'])]
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order_crud/index.html.twig', [
@@ -30,6 +30,7 @@ class OrderCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $order->setStatus('draft');
             $entityManager->persist($order);
             $entityManager->flush();
 
