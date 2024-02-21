@@ -1,0 +1,32 @@
+framework:
+    workflows:
+        order_workflow:
+            type: 'state_machine' # Or 'state_machine' if your logic strictly follows state machine semantics
+            marking_store:
+                type: 'method'
+                property: 'status'
+            supports:
+                - App\Entity\Order
+            places:
+                - draft
+                - pending
+                - accepted
+                - declined
+                - notified
+                - published
+            transitions:
+                create:
+                    from: draft
+                    to: pending
+                accept:
+                    from: pending
+                    to: accepted
+                decline:
+                    from: pending
+                    to: declined
+                notify:
+                    from: accepted
+                    to: notified
+                publish:
+                    from: notified
+                    to: published
