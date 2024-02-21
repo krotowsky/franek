@@ -30,3 +30,6 @@ framework:
                 publish:
                     from: notified
                     to: published
+                revert:
+                    from: pending
+                    to: draft
