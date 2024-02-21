@@ -150,17 +150,17 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE,
-            //     $e->getReason()
-            // ));
+             $this->addFlash('reset_password_error', sprintf(
+                 '%s - %s',
+                 ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE,
+                 $e->getReason()
+             ));
 
             return $this->redirectToRoute('app_check_email');
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('system@clipcart.tv', 'clipcart.tv'))
+            ->from(new Address('system@majrom.pl', 'clipcart.tv'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')
@@ -173,7 +173,7 @@ class ResetPasswordController extends AbstractController
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
-
+        $this->addFlash('success', 'Check inbox, to reset your password.');
         return $this->redirectToRoute('app_check_email');
     }
 }

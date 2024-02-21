@@ -40,7 +40,7 @@ security:
          - { path: ^/login, roles: PUBLIC_ACCESS }
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/reset-password, roles: PUBLIC_ACCESS }
-         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
+         - { path: ^/verify/email^, roles: PUBLIC_ACCESS }
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/panel, roles: ROLE_CUSTOMER }
          - { path: ^/profile, roles: ROLE_USER }
