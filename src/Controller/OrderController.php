@@ -8,9 +8,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Workflow\Registry;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Event\OrderStatusChangedEvent;
 
 class OrderController extends AbstractController
 {
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
     #[Route('/order/{status}/{orderId}', name: 'app_order_accept',methods: ['GET'])]
     public function acceptOrder(int $orderId,string $status, Registry $workflows, EntityManagerInterface $entityManager): Response
     {
@@ -27,7 +35,9 @@ class OrderController extends AbstractController
             $workflow->apply($order, $status);
             $entityManager->flush();
             $this->addFlash('success', 'Order has been updated');
-            // Additional logic (e.g., notify review maker)
+            $event = new OrderStatusChangedEvent($orderId, $status);
+//            $this->eventDispatcher->dispatch($event,'onOrderStatusChanged');
+            $this->eventDispatcher->dispatch($event,'onOrderNotify');
         } else {
             $this->addFlash('danger', 'Status not allowed');
         }
