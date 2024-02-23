@@ -7164,3 +7164,5 @@
 /vendor/webmozart/assert/README.md
 /vendor/autoload.php
 /vendor/autoload_runtime.php
+/node_modules/*
+/var/*
