@@ -14,6 +14,8 @@ framework:
                 - declined
                 - notified
                 - published
+                - ready
+                - hold
             transitions:
                 create:
                     from: draft
@@ -27,9 +29,15 @@ framework:
                 notify:
                     from: accepted
                     to: notified
+                ready:
+                    from: notified
+                    to: ready
+                hold:
+                    from: ['draft','pending','accepted','notified','published']
+                    to: hold
                 publish:
                     from: notified
                     to: published
                 revert:
-                    from: pending
+                    from: ['pending','hold']
                     to: draft

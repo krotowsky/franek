@@ -4,12 +4,23 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    bunny_cdn.region: '%env(BUNNYCDN_REGION)%'
+    bunny_cdn.storage_zone_name: '%env(BUNNYCDN_STORAGE_ZONE_NAME)%'
+    bunny_cdn.access_key: '%env(BUNNYCDN_ACCESS_KEY)%'
+    videos_directory: '%kernel.project_dir%/public/uploads/videos'
+    cloudflare.api_key: '%env(CLOUDFLARE_API_KEY)%'
+    cloudflare.account_id: '%env(CLOUDFLARE_ACCOUNT_ID)%'
+
 
 services:
     App\EventListener\OrderWorkflowSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }
     # default configuration for services in *this* file
+    App\Service\CloudflareStreamService:
+                arguments:
+                    $cloudflareApiKey: '%cloudflare.api_key%'
+                    $cloudflareAccountId: '%cloudflare.account_id%'
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -22,6 +33,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\Service\BunnyCDNStorageService:
+        arguments:
+            $region: '%bunny_cdn.region%'
+            $storageZoneName: '%bunny_cdn.storage_zone_name%'
+            $accessKey: '%bunny_cdn.access_key%'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

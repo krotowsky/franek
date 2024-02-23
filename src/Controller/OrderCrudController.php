@@ -17,8 +17,11 @@ class OrderCrudController extends AbstractController
     #[Route('/list', name: 'app_order_crud_index', methods: ['GET'])]
     public function index(OrderRepository $orderRepository): Response
     {
+        $statuses [] = ['draft', 'pending','declined','accepted'];
+        $orders = $orderRepository->findByStatusAndRole($statuses);
+
         return $this->render('order_crud/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'orders' => $orders,
         ]);
     }
 

@@ -6,17 +6,42 @@
     {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <h1>Reset your password</h1>
-
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
-            </small>
+    <body>
+    <div class="main-wrapper">
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-box">
+                <div id="loginform">
+                    <div class="logo">
+                        <h5 class="font-medium m-b-20">panel.clipcart.tv</h5>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_start(requestForm, {'attr': {'class': 'form-horizontal m-t-20', 'id': 'loginform'}}) }}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ti-user"></i></span>
+                                </div>
+                                {{ form_widget(requestForm.email, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Email', 'aria-label': 'Email'}}) }}
+                            </div>
+                            <div>
+                                <small>
+                                    Enter your email address, and we will send you a
+                                    link to reset your password.
+                                </small>
+                            </div>
+                            <button class="btn btn-primary">Send password reset email</button>
+                            {{ form_end(requestForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+
 {% endblock %}

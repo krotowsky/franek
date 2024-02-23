@@ -6,18 +6,63 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+    <body>
+    <div class="main-wrapper">
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-box">
+                <div id="loginform">
+                    <div class="logo">
+                        <h5 class="font-medium m-b-20">panel.clipcart.tv</h5>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal m-t-20', 'id': 'loginform'}}) }}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ti-user"></i></span>
+                                </div>
+                                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Email', 'aria-label': 'Email'}}) }}
+                            </div>
 
-    <h1>Register</h1>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ti-pencil"></i></span>
+                                </div>
+                                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Password', 'aria-label': 'Password'}}) }}
+                                {{ form_widget(registrationForm._token) }}
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ti-pencil"></i></span>
+                                </div>
+                                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Repeat password', 'aria-label': 'Repeat password'}}) }}
+                            </div>
 
-    {{ form_errors(registrationForm) }}
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        {{ form_widget(registrationForm.agreeTerms) }}
+                                        {{ form_label(registrationForm.agreeTerms, null, {'attr': {'class': 'custom-control-label'}, 'for': 'customCheck1'}) }}
+                                        <a href="{{ path('app_forgot_password_request') }}" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot password?</a>
+                                    </div>
+                                </div>
+                            </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-20">
+                                    <button type="submit" class="btn btn-block btn-lg btn-info">Register</button>
+                                </div>
+                            </div>
+                            {{ form_end(registrationForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
 {% endblock %}

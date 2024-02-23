@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload Video{% endblock %}
+
+{% block body %}
+    <h1>Upload a Video</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.video) }}
+    <button class="btn">Upload</button>
+    {{ form_end(form) }}
+{% endblock %}
